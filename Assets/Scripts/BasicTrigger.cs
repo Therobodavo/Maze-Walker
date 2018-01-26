@@ -20,11 +20,12 @@ public class BasicTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        mat1.color = Color.red;
+        //mat1.color = Color.red;
+        other.transform.position = new Vector3(-5.5f,-2.5f,0);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        mat1.color = Color.yellow;
+        //mat1.color = Color.yellow;
     }
 }
