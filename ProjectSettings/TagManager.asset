@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - FlipTrap
   - WallTrap
+  - Key
+  - Door
   layers:
   - Default
   - TransparentFX

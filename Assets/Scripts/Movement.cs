@@ -9,6 +9,7 @@ public class Movement : MonoBehaviour
     GameObject[] enemies;
     GameObject[] flipTraps;
     GameObject[] wallTraps;
+    GameObject[] door;
 
     //Main Camera
     public  Camera mCamera;
@@ -38,6 +39,7 @@ public class Movement : MonoBehaviour
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
        flipTraps = GameObject.FindGameObjectsWithTag("FlipTrap");
         wallTraps = GameObject.FindGameObjectsWithTag("WallTrap");
+        door = GameObject.FindGameObjectsWithTag("Door");
         swapped = false;
        
     }
@@ -60,6 +62,23 @@ public class Movement : MonoBehaviour
                 return false;
             }
         }
+
+        foreach (GameObject obs in door)
+        {
+            DoorScript dScript = (DoorScript)obs.GetComponent("DoorScript");
+            if (dScript.open == false)
+            {
+                Rect obsRect = new Rect(new Vector2(obs.transform.position.x - (obs.transform.localScale.x / 2), obs.transform.position.y - (obs.transform.localScale.y / 2)), new Vector2(obs.transform.localScale.x, obs.transform.localScale.y));
+                Rect playerRect = new Rect(new Vector2(newPos.x - (transform.localScale.x / 2), newPos.y - (transform.localScale.y / 2)), new Vector2(transform.localScale.x, transform.localScale.y));
+                if (obsRect.Overlaps(playerRect))
+                {
+                    Debug.Log(obsRect.position);
+                    return false;
+                }
+            }
+           
+        }
+
         return canMove;
     }
 
