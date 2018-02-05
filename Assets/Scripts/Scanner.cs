@@ -10,11 +10,27 @@ public class Scanner : MonoBehaviour {
     bool scanStarted = false;
     bool scanning = false;
 
+    GameObject[] enemies;
+    GameObject[] traps;
+    GameObject[] keys;
+    List<GameObject> blocks;
+    List<GameObject> objsFound;
+    public GameObject whiteBlock;
+
 	// Use this for initialization
 	void Start ()
     {
+        blocks = new List<GameObject>();
+        objsFound = new List<GameObject>();
+        whiteBlock.transform.position = new Vector3(-100,-100,-100);
+
         startPos = transform.GetChild(0).position;
         endPos = transform.GetChild(1).position;
+
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        traps = GameObject.FindGameObjectsWithTag("FlipTrap");
+        keys = GameObject.FindGameObjectsWithTag("Key");
+        Debug.Log(traps[4].transform.position);
     }
 	
 	// Update is called once per frame
@@ -35,6 +51,11 @@ public class Scanner : MonoBehaviour {
             {
                 //Set start position of scanner
                 transform.position = startPos;
+
+                objsFound.Clear();
+                enemies = GameObject.FindGameObjectsWithTag("Enemy");
+                traps = GameObject.FindGameObjectsWithTag("FlipTrap");
+                keys = GameObject.FindGameObjectsWithTag("Key");
                 scanStarted = true;
             }
 
@@ -44,7 +65,45 @@ public class Scanner : MonoBehaviour {
                 //move
                 transform.position += new Vector3(.15f, 0, 0);
                 //check objects that are being collided
-
+                foreach(GameObject obj in enemies)
+                {
+                    if(obj.GetComponent<Collider>().bounds.Intersects(GetComponent<Collider>().bounds) && objsFound.IndexOf(obj) == -1)
+                    {
+                        whiteBlock.transform.position = obj.transform.position;
+                        whiteBlock.transform.localScale = obj.transform.localScale;
+                        blocks.Add(Instantiate(whiteBlock));
+                        objsFound.Add(obj);
+                    }
+                }
+                foreach(GameObject obj in traps)
+                {
+                    if(obj.GetComponent<Collider>().bounds.Intersects(GetComponent<Collider>().bounds) && objsFound.IndexOf(obj) == -1)
+                    {
+                        whiteBlock.transform.position = obj.transform.position;
+                        whiteBlock.transform.localScale = obj.transform.localScale;
+                        blocks.Add(Instantiate(whiteBlock));
+                        objsFound.Add(obj);
+                    }
+                }
+                foreach(GameObject obj in keys)
+                {
+                    if(obj.GetComponent<Collider>().bounds.Intersects(GetComponent<Collider>().bounds) && objsFound.IndexOf(obj) == -1)
+                    {
+                        whiteBlock.transform.position = obj.transform.position;
+                        whiteBlock.transform.localScale = obj.transform.localScale;
+                        blocks.Add(Instantiate(whiteBlock));
+                        objsFound.Add(obj);
+                    }
+                }
+            }
+            else
+            {
+                foreach(GameObject b in blocks)
+                {
+                    Destroy(b);
+                }
+                scanning = false;
+                scanStarted = false;
             }
         }
     }
