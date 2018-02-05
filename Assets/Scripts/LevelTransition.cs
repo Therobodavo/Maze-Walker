@@ -8,6 +8,8 @@ public class LevelTransition : MonoBehaviour
     //Variables
     public GameObject player;
     public string nextLvl;
+
+    public Vector3 newPos;
 	// Use this for initialization
 	void Start ()
     {
@@ -25,8 +27,7 @@ public class LevelTransition : MonoBehaviour
         //Loading in the next scene
         SceneManager.LoadScene(nextLvl);
         //Resetting the position of the eplayer
-        player.transform.position = player.GetComponent<Sprt_Movement>().startPos;
-
-        
+        //player.transform.position = player.GetComponent<Sprt_Movement>().startPos; 
+        player.transform.position = newPos;
     }
 }
