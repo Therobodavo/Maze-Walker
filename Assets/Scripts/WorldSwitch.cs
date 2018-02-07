@@ -20,6 +20,8 @@ public class WorldSwitch : MonoBehaviour
     private Vector3Int playerInt;
 
     private Vector3 initPlayerPos;
+
+    public Vector3 playerSpawn;
 	// Use this for initialization
 	void Start ()
     {
@@ -62,6 +64,10 @@ public class WorldSwitch : MonoBehaviour
                 }
             }
             */
+            if(Physics2D.Raycast(player.transform.position, player.transform.up, .1f).collider == true)
+            {
+                player.transform.position = playerSpawn;
+            }
         }
 	}
 

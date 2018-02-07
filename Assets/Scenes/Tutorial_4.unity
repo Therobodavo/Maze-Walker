@@ -676,6 +676,7 @@ MonoBehaviour:
   underWorld: {fileID: 578518240}
   overMap: {fileID: 1742944096}
   underMap: {fileID: 2023392142}
+  playerSpawn: {x: -0.5, y: -3.5, z: 0}
 --- !u!1 &1677068524
 GameObject:
   m_ObjectHideFlags: 0
