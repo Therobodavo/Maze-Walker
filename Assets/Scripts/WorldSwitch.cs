@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 public class WorldSwitch : MonoBehaviour
 {
@@ -22,6 +23,10 @@ public class WorldSwitch : MonoBehaviour
     private Vector3 initPlayerPos;
 
     public Vector3 playerSpawn;
+
+    public List<GameObject> keys = new List<GameObject>();
+    public List<GameObject> doors = new List<GameObject>();
+
 	// Use this for initialization
 	void Start ()
     {
@@ -37,7 +42,7 @@ public class WorldSwitch : MonoBehaviour
     {
         playerInt = new Vector3Int((int)(player.transform.position.x +.5), (int)(player.transform.position.y +.5), (int)player.transform.position.z);
 
-        Debug.Log(overMap.GetTile(playerInt));
+        //Debug.Log(overMap.GetTile(playerInt));
 		//Getting input to change the worlds
         if(Input.GetKeyDown(KeyCode.E))
         {
@@ -64,15 +69,26 @@ public class WorldSwitch : MonoBehaviour
                 }
             }
             */
+
+            //If the player switches into a world and into a tile
             if(Physics2D.Raycast(player.transform.position, player.transform.up, .1f).collider == true)
             {
-                player.transform.position = playerSpawn;
+                //Restart the player at their spawn position
+                player.transform.position = initPlayerPos;
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+                //Looping through the array of keys to set them as active
+                foreach(GameObject go in keys)
+                {
+                    go.SetActive(true);
+                }
+
+                //Setting all doors to be active
+                foreach(GameObject go in doors)
+                {
+                    go.SetActive(true);
+                }
             }
         }
 	}
-
-    public bool CheckTile(ITilemap itm, Vector3Int pos)
-    {
-        return itm.GetTile(pos) == this;
-    }
 }

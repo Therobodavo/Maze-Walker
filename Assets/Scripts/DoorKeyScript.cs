@@ -23,6 +23,9 @@ public class DoorKeyScript : MonoBehaviour
         //Looping through the connected objects and disabling them
         foreach(GameObject go in doors)
         {
+            /*go.GetComponent<MeshRenderer>().enabled = false;
+            go.GetComponent<BoxCollider2D>().enabled = false;
+            */
             go.SetActive(false);
         }
 
