@@ -10,12 +10,11 @@ public class Scanner : MonoBehaviour {
     bool scanStarted = false;
     bool scanning = false;
 
-    GameObject[] enemies;
-    GameObject[] traps;
-    GameObject[] keys;
     List<GameObject> blocks;
-    List<GameObject> objsFound;
+    List<int> objsFound;
     public GameObject whiteBlock;
+    public GameObject overworld;
+    public GameObject underworld;
     public float secDelay = 2;
     float timeLastEnded = -5;
 
@@ -23,16 +22,12 @@ public class Scanner : MonoBehaviour {
 	void Start ()
     {
         blocks = new List<GameObject>();
-        objsFound = new List<GameObject>();
+        objsFound = new List<int>();
         whiteBlock.transform.position = new Vector3(-100,-100,-100);
 
         startPos = transform.GetChild(0).position;
         endPos = transform.GetChild(1).position;
 
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        traps = GameObject.FindGameObjectsWithTag("FlipTrap");
-        keys = GameObject.FindGameObjectsWithTag("Key");
-        Debug.Log(traps[4].transform.position);
     }
 	
 	// Update is called once per frame
@@ -55,9 +50,6 @@ public class Scanner : MonoBehaviour {
                 transform.position = startPos;
 
                 objsFound.Clear();
-                enemies = GameObject.FindGameObjectsWithTag("Enemy");
-                traps = GameObject.FindGameObjectsWithTag("FlipTrap");
-                keys = GameObject.FindGameObjectsWithTag("Key");
                 scanStarted = true;
             }
 
@@ -66,38 +58,35 @@ public class Scanner : MonoBehaviour {
             {
                 //move
                 transform.position += new Vector3(.15f, 0, 0);
-                //check objects that are being collided
-                foreach(GameObject obj in enemies)
+                if(underworld.activeInHierarchy)
                 {
-                    if(obj.GetComponent<Collider>().bounds.Intersects(GetComponent<Collider>().bounds) && objsFound.IndexOf(obj) == -1)
+                    for(int i = 0; i < overworld.transform.childCount;i++) 
                     {
-                        whiteBlock.transform.position = obj.transform.position;
-                        whiteBlock.transform.position += new Vector3(0, 0, -1);
-                        whiteBlock.transform.localScale = obj.transform.localScale;
-                        blocks.Add(Instantiate(whiteBlock));
-                        objsFound.Add(obj);
+                        if(overworld.transform.GetChild(i).tag == "Key" || overworld.transform.GetChild(i).tag == "FlipTrap" || overworld.transform.GetChild(i).tag == "Enemy" &&
+                           overworld.transform.GetChild(i).GetComponent<Collider>().bounds.Intersects(GetComponent<Collider>().bounds) && objsFound.IndexOf(overworld.transform.GetChild(i).GetInstanceID()) != -1)
+                        {
+                            whiteBlock.transform.position = overworld.transform.GetChild(i).transform.position;
+                            whiteBlock.transform.position += new Vector3(0, 0, -1);
+                            whiteBlock.transform.localScale = overworld.transform.GetChild(i).transform.localScale;
+                            blocks.Add(Instantiate(whiteBlock));
+                            objsFound.Add(overworld.transform.GetChild(i).GetInstanceID());
+                        }
                     }
                 }
-                foreach(GameObject obj in traps)
+                else if(overworld.activeInHierarchy)
                 {
-                    if(obj.GetComponent<Collider>().bounds.Intersects(GetComponent<Collider>().bounds) && objsFound.IndexOf(obj) == -1)
+                    for(int i = 0; i < underworld.transform.childCount;i++) 
                     {
-                        whiteBlock.transform.position = obj.transform.position;
-                        whiteBlock.transform.position += new Vector3(0, 0, -1);
-                        whiteBlock.transform.localScale = obj.transform.localScale;
-                        blocks.Add(Instantiate(whiteBlock));
-                        objsFound.Add(obj);
-                    }
-                }
-                foreach(GameObject obj in keys)
-                {
-                    if(obj.GetComponent<Collider>().bounds.Intersects(GetComponent<Collider>().bounds) && objsFound.IndexOf(obj) == -1)
-                    {
-                        whiteBlock.transform.position = obj.transform.position;
-                        whiteBlock.transform.position += new Vector3(0, 0, -1);
-                        whiteBlock.transform.localScale = obj.transform.localScale;
-                        blocks.Add(Instantiate(whiteBlock));
-                        objsFound.Add(obj);
+                        if(underworld.transform.GetChild(i).tag == "Key" || underworld.transform.GetChild(i).tag == "FlipTrap" || underworld.transform.GetChild(i).tag == "Enemy" &&
+                           underworld.transform.GetChild(i).GetComponent<Collider>().bounds.Intersects(GetComponent<Collider>().bounds) && objsFound.IndexOf(underworld.transform.GetChild(i).GetInstanceID()) != -1)
+                        {
+                            whiteBlock.transform.position = underworld.transform.GetChild(i).transform.position;
+                            whiteBlock.transform.position += new Vector3(0, 0, -1);
+                            whiteBlock.transform.localScale = underworld.transform.GetChild(i).transform.localScale;
+                            blocks.Add(Instantiate(whiteBlock));
+                            objsFound.Add(underworld.transform.GetChild(i).GetInstanceID());
+                        }
+                        
                     }
                 }
             }
