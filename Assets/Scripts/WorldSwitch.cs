@@ -88,6 +88,15 @@ public class WorldSwitch : MonoBehaviour
                 {
                     go.SetActive(true);
                 }
+
+                //if the player is switching into the underworld, and dies, switch back to the overworld for the level resetting
+                if(underAct)
+                {
+                    underAct = false;
+                    underWorld.SetActive(false);
+                    overAct = true;
+                    overWorld.SetActive(true);
+                }
             }
         }
 	}
