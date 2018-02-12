@@ -85,6 +85,7 @@ public class Scanner : MonoBehaviour {
                             whiteBlock.transform.localScale = underworld.transform.GetChild(i).transform.localScale;
                             blocks.Add(Instantiate(whiteBlock));
                             objsFound.Add(underworld.transform.GetChild(i).GetInstanceID());
+             
                         }
                         
                     }
