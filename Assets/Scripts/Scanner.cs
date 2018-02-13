@@ -40,7 +40,7 @@ public class Scanner : MonoBehaviour {
         }
         Scan();
 	}
-    void OnTriggerEnter(Collider other)
+ /*   void OnTriggerEnter(Collider other)
     {
         whiteBlock.transform.position = overworld.transform.GetChild(i).transform.position;
         whiteBlock.transform.position += new Vector3(0, 0, -1);
@@ -48,6 +48,7 @@ public class Scanner : MonoBehaviour {
         blocks.Add(Instantiate(whiteBlock));
         objsFound.Add(overworld.transform.GetChild(i).GetInstanceID());
     }
+    */
     void Scan()
     {
         if(scanning)

@@ -52,12 +52,16 @@ public class WorldSwitch : MonoBehaviour
             if(overAct)
             {
                 overWorld.transform.position = new Vector3(overWorld.transform.position.x, overWorld.transform.position.y, 0);
+                overMap.GetComponent<TilemapCollider2D>().enabled = true;
                 underWorld.transform.position = new Vector3(underWorld.transform.position.x, underWorld.transform.position.y, 5);
+                underMap.GetComponent<TilemapCollider2D>().enabled = false;
             }
             else if(underAct)
             {
                 overWorld.transform.position = new Vector3(overWorld.transform.position.x, overWorld.transform.position.y, 5);
+                overMap.GetComponent<TilemapCollider2D>().enabled = false;
                 underWorld.transform.position = new Vector3(underWorld.transform.position.x, underWorld.transform.position.y, 0);
+                underMap.GetComponent<TilemapCollider2D>().enabled = true;
             }
             //underWorld.SetActive(underAct);
             /*
