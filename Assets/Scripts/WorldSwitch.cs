@@ -40,8 +40,6 @@ public class WorldSwitch : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        playerInt = new Vector3Int((int)(player.transform.position.x +.5), (int)(player.transform.position.y +.5), (int)player.transform.position.z);
-
         //Debug.Log(overMap.GetTile(playerInt));
 		//Getting input to change the worlds
         if(Input.GetKeyDown(KeyCode.E))
@@ -50,8 +48,22 @@ public class WorldSwitch : MonoBehaviour
             overAct = !overAct;
             underAct = !underAct;
 
-            overWorld.SetActive(overAct);
-            underWorld.SetActive(underAct);
+            //overWorld.SetActive(overAct);
+            if(overAct)
+            {
+                overWorld.transform.position = new Vector3(overWorld.transform.position.x, overWorld.transform.position.y, 0);
+                overMap.GetComponent<TilemapCollider2D>().enabled = true;
+                underWorld.transform.position = new Vector3(underWorld.transform.position.x, underWorld.transform.position.y, 5);
+                underMap.GetComponent<TilemapCollider2D>().enabled = false;
+            }
+            else if(underAct)
+            {
+                overWorld.transform.position = new Vector3(overWorld.transform.position.x, overWorld.transform.position.y, 5);
+                overMap.GetComponent<TilemapCollider2D>().enabled = false;
+                underWorld.transform.position = new Vector3(underWorld.transform.position.x, underWorld.transform.position.y, 0);
+                underMap.GetComponent<TilemapCollider2D>().enabled = true;
+            }
+            //underWorld.SetActive(underAct);
             /*
             //Checking for player death 
             if(overAct)
