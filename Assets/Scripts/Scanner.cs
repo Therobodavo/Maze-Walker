@@ -11,10 +11,8 @@ public class Scanner : MonoBehaviour {
     bool scanning = false;
 
     List<GameObject> blocks;
-    List<int> objsFound;
     public GameObject whiteBlock;
-    public GameObject overworld;
-    public GameObject underworld;
+
     public float secDelay = 2;
     float timeLastEnded = -5;
     public float speed = 0;
@@ -23,7 +21,6 @@ public class Scanner : MonoBehaviour {
 	void Start ()
     {
         blocks = new List<GameObject>();
-        objsFound = new List<int>();
         whiteBlock.transform.position = new Vector3(-100,-100,-100);
 
         startPos = transform.GetChild(0).position;
@@ -40,15 +37,13 @@ public class Scanner : MonoBehaviour {
         }
         Scan();
 	}
- /*   void OnTriggerEnter(Collider other)
+     void OnTriggerEnter(Collider other)
     {
-        //whiteBlock.transform.position = overworld.transform.GetChild(i).transform.position;
-        //whiteBlock.transform.position += new Vector3(0, 0, -1);
-        //whiteBlock.transform.localScale = overworld.transform.GetChild(i).transform.localScale;
-        //blocks.Add(Instantiate(whiteBlock));
-        //objsFound.Add(overworld.transform.GetChild(i).GetInstanceID());
+        whiteBlock.transform.position = other.transform.position;
+        whiteBlock.transform.position += new Vector3(0, 0, -1);
+        whiteBlock.transform.localScale = other.transform.localScale;
+        blocks.Add(Instantiate(whiteBlock));
     }
-    */
     void Scan()
     {
         if(scanning)
@@ -57,55 +52,16 @@ public class Scanner : MonoBehaviour {
             {
                 //Set start position of scanner
                 transform.position = startPos;
-
-                objsFound.Clear();
+                GetComponent<Rigidbody>().AddForce(Vector3.right * speed, ForceMode.VelocityChange);
                 scanStarted = true;
             }
 
             //check if behind
-            if (transform.position.x < endPos.x)
-            {
-                //move
-                GetComponent<Rigidbody>().AddForce(Vector3.right * speed, ForceMode.VelocityChange);
-
-                if(underworld.activeInHierarchy)
-                {
-                    for(int i = 0; i < overworld.transform.childCount;i++) 
-                    {
-
-                        if((overworld.transform.GetChild(i).tag == "Key" || overworld.transform.GetChild(i).tag == "FlipTrap" || overworld.transform.GetChild(i).tag == "Enemy") &&
-                           overworld.transform.GetChild(i).GetComponent<Collider>().bounds.Intersects(GetComponent<Collider>().bounds) && objsFound.IndexOf(overworld.transform.GetChild(i).GetInstanceID()) == -1)
-                        {
-                            whiteBlock.transform.position = overworld.transform.GetChild(i).transform.position;
-                            whiteBlock.transform.position += new Vector3(0, 0, -1);
-                            whiteBlock.transform.localScale = overworld.transform.GetChild(i).transform.localScale;
-                            blocks.Add(Instantiate(whiteBlock));
-                            objsFound.Add(overworld.transform.GetChild(i).GetInstanceID());
-                        }
-                    }
-                }
-                else if(overworld.activeInHierarchy)
-                {
-                    for(int i = 0; i < underworld.transform.childCount;i++) 
-                    {
-                        if(underworld.transform.GetChild(i).tag == "Key" || underworld.transform.GetChild(i).tag == "FlipTrap" || underworld.transform.GetChild(i).tag == "Enemy" &&
-                           underworld.transform.GetChild(i).GetComponent<Collider>().bounds.Intersects(GetComponent<Collider>().bounds) && objsFound.IndexOf(underworld.transform.GetChild(i).GetInstanceID()) == -1)
-                        {
-                            whiteBlock.transform.position = underworld.transform.GetChild(i).transform.position;
-                            whiteBlock.transform.position += new Vector3(0, 0, -1);
-                            whiteBlock.transform.localScale = underworld.transform.GetChild(i).transform.localScale;
-                            blocks.Add(Instantiate(whiteBlock));
-                            objsFound.Add(underworld.transform.GetChild(i).GetInstanceID());
-             
-                        }
-                        
-                    }
-                }
-            }
-            else
+            if (transform.position.x >= endPos.x)
             {
                 timeLastEnded = Time.time;
                 scanning = false;
+                GetComponent<Rigidbody>().velocity = Vector3.zero;
                 scanStarted = false;
             }
         }
