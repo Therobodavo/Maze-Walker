@@ -42,11 +42,11 @@ public class Scanner : MonoBehaviour {
 	}
     void OnTriggerEnter(Collider other)
     {
-        whiteBlock.transform.position = overworld.transform.GetChild(i).transform.position;
-        whiteBlock.transform.position += new Vector3(0, 0, -1);
-        whiteBlock.transform.localScale = overworld.transform.GetChild(i).transform.localScale;
-        blocks.Add(Instantiate(whiteBlock));
-        objsFound.Add(overworld.transform.GetChild(i).GetInstanceID());
+        //whiteBlock.transform.position = overworld.transform.GetChild(i).transform.position;
+        //whiteBlock.transform.position += new Vector3(0, 0, -1);
+        //whiteBlock.transform.localScale = overworld.transform.GetChild(i).transform.localScale;
+        //blocks.Add(Instantiate(whiteBlock));
+        //objsFound.Add(overworld.transform.GetChild(i).GetInstanceID());
     }
     void Scan()
     {
