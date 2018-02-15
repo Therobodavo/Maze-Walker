@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 65217678914590700}
   - component: {fileID: 23572110409941074}
   - component: {fileID: 114039829590298670}
-  - component: {fileID: 54982185817274678}
+  - component: {fileID: 54468378124511126}
   m_Layer: 8
   m_Name: Scanner
   m_TagString: Untagged
@@ -68,7 +68,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1772736656703606}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.21, y: -0.03, z: 0}
+  m_LocalPosition: {x: 14.78, y: -0.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4888814914365612}
@@ -81,7 +81,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1724557262489778}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.46, y: -0.033, z: 0}
+  m_LocalPosition: {x: -0.61, y: -0.033, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4888814914365612}
@@ -94,8 +94,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1340445170972968}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.63, y: 0.02, z: -0.1721098}
-  m_LocalScale: {x: 1, y: 10.000896, z: 1}
+  m_LocalPosition: {x: -7.550056, y: 0.095, z: -0.1721098}
+  m_LocalScale: {x: 1, y: 10.940175, z: 1}
   m_Children:
   - {fileID: 4356010927668422}
   - {fileID: 4253854314272736}
@@ -116,7 +116,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 3df1eb1496d3dfc458a610600b83a350, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -143,7 +143,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1340445170972968}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54982185817274678
+--- !u!54 &54468378124511126
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -153,7 +153,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 124
@@ -182,7 +182,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   whiteBlock: {fileID: 1417648457810626, guid: c2da1e00c9439d849bd1ea68f84ff8f7, type: 2}
-  overworld: {fileID: 0}
-  underworld: {fileID: 0}
   secDelay: 2
-  speed: 0
+  speed: 10
