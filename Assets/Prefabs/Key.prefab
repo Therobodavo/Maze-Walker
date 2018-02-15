@@ -76,9 +76,8 @@ GameObject:
   - component: {fileID: 33436743509493048}
   - component: {fileID: 65737370355933304}
   - component: {fileID: 23816383529509126}
-  - component: {fileID: 114233327927901028}
-  - component: {fileID: 114247671148174288}
   - component: {fileID: 114025566511688596}
+  - component: {fileID: 114981325304750620}
   m_Layer: 9
   m_Name: Key
   m_TagString: Key
@@ -111,7 +110,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1086751910383566}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.041642133, y: -0.250543, z: 0}
+  m_LocalPosition: {x: 0.041642133, y: -0.368, z: 0}
   m_LocalScale: {x: 0.17942934, y: 0.49078032, z: 1}
   m_Children: []
   m_Father: {fileID: 4559740054819818}
@@ -124,8 +123,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1726620294109828}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.4702225, y: -3.3736162, z: 0.8935266}
-  m_LocalScale: {x: 0.8625618, y: 0.41792727, z: 1}
+  m_LocalPosition: {x: -5.4729, y: -3.3803, z: 0.85696}
+  m_LocalScale: {x: 0.61537874, y: 0.29816246, z: 0.07979996}
   m_Children:
   - {fileID: 4653644671001826}
   - {fileID: 4986206827788648}
@@ -142,7 +141,7 @@ Transform:
   m_GameObject: {fileID: 1658781647740564}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.3092757, y: 0.067453824, z: -0.07681352}
-  m_LocalScale: {x: 0.38531163, y: 0.8782345, z: 1}
+  m_LocalScale: {x: 0.38531163, y: 0.8782345, z: 2.203011}
   m_Children: []
   m_Father: {fileID: 4559740054819818}
   m_RootOrder: 0
@@ -154,7 +153,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1324050802966634}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.33641317, y: -0.26017928, z: 0}
+  m_LocalPosition: {x: 0.33641317, y: -0.373, z: 0}
   m_LocalScale: {x: 0.17942934, y: 0.49078032, z: 1}
   m_Children: []
   m_Father: {fileID: 4559740054819818}
@@ -187,7 +186,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: f934f5d95187d374f889c2a30ef45d6d, type: 2}
+  - {fileID: 2100000, guid: b00a4d9e8e9f6cd43814518c8cb5543c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -221,7 +220,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 750b82feb1abaa546b9e8d3fd07a0d9b, type: 2}
+  - {fileID: 2100000, guid: b00a4d9e8e9f6cd43814518c8cb5543c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -255,7 +254,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 750b82feb1abaa546b9e8d3fd07a0d9b, type: 2}
+  - {fileID: 2100000, guid: b00a4d9e8e9f6cd43814518c8cb5543c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -323,7 +322,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 750b82feb1abaa546b9e8d3fd07a0d9b, type: 2}
+  - {fileID: 2100000, guid: b00a4d9e8e9f6cd43814518c8cb5543c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -440,20 +439,7 @@ MonoBehaviour:
   doors:
   - {fileID: 0}
   - {fileID: 0}
---- !u!114 &114233327927901028
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1726620294109828}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9feeb15589e7c0d4daf2cbbdac0c60ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Active: 0
-  keyParts: []
---- !u!114 &114247671148174288
+--- !u!114 &114981325304750620
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -461,11 +447,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1726620294109828}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cca8f4267711434aad863679c03ee5b, type: 3}
+  m_Script: {fileID: 11500000, guid: 64b3d795892a718489b1cf9df97a2be5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doors:
-  - {fileID: 0}
 --- !u!135 &135761748576771978
 SphereCollider:
   m_ObjectHideFlags: 1

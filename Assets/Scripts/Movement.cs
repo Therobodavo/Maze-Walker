@@ -4,104 +4,115 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    //Variables
+   //Variables
     GameObject[] obstacles;
-    GameObject[] enemies;
+  public GameObject[] enemies;
     GameObject[] flipTraps;
     GameObject[] wallTraps;
-    GameObject[] door;
+    public GameObject[] keys;
+    public GameObject[] doors;
 
-    //Main Camera
-    public  Camera mCamera;
-
-    //camera bool
-   public  bool cMoved;
 
     //start position player
     Vector3 sPos;
 
-    //start postion camera
-    Vector3 cPos;
 
     //Bool for checking if the player just flipped worlds
     bool swapped;
 
-    //float for checking which world the players in
-    float world;
 
-	// Use this for initialization
-	void Start ()
+
+
+    // Use this for initialization
+    void Start()
     {
+        keys = GameObject.FindGameObjectsWithTag("Key");
+        doors = GameObject.FindGameObjectsWithTag("Door");
         sPos = transform.position;
-        cPos = mCamera.transform.position;
-        cMoved = false;
-	    obstacles = GameObject.FindGameObjectsWithTag("Obstacle");	
+        obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-       flipTraps = GameObject.FindGameObjectsWithTag("FlipTrap");
+        flipTraps = GameObject.FindGameObjectsWithTag("FlipTrap");
         wallTraps = GameObject.FindGameObjectsWithTag("WallTrap");
-        door = GameObject.FindGameObjectsWithTag("Door");
+ 
+
         swapped = false;
-       
+
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
+        isAlive();
+        DontDestroyOnLoad(this);
         getInput();
     }
-    public bool canMove(Vector3 newPos)
+    public void restart()
     {
-        bool canMove = true;
-        foreach(GameObject obs in obstacles)
+        foreach (GameObject ob in enemies)
         {
-            Rect obsRect = new Rect(new Vector2(obs.transform.position.x - (obs.transform.localScale.x / 2),obs.transform.position.y - (obs.transform.localScale.y / 2)),new Vector2(obs.transform.localScale.x,obs.transform.localScale.y));
-            Rect playerRect = new Rect(new Vector2(newPos.x - (transform.localScale.x / 2),newPos.y - (transform.localScale.y / 2)),new Vector2(transform.localScale.x,transform.localScale.y));
-            if(obsRect.Overlaps(playerRect))
+            TrackerMovement eScript = (TrackerMovement)ob.GetComponent("TrackerMovement");
+            if (eScript.active)
             {
-                Debug.Log(obsRect.position);
-                return false;
+                eScript.transform.position = eScript.sPos;
+                transform.position = sPos;
             }
-        }
-
-        foreach (GameObject obs in door)
-        {
-            DoorScript dScript = (DoorScript)obs.GetComponent("DoorScript");
-            if (dScript.open == false)
+            /*SeekerMovement eScript2 = (SeekerMovement)ob.GetComponent("SeekerMovement");
+            if (eScript2.active)
             {
-                Rect obsRect = new Rect(new Vector2(obs.transform.position.x - (obs.transform.localScale.x / 2), obs.transform.position.y - (obs.transform.localScale.y / 2)), new Vector2(obs.transform.localScale.x, obs.transform.localScale.y));
-                Rect playerRect = new Rect(new Vector2(newPos.x - (transform.localScale.x / 2), newPos.y - (transform.localScale.y / 2)), new Vector2(transform.localScale.x, transform.localScale.y));
-                if (obsRect.Overlaps(playerRect))
-                {
-                    Debug.Log(obsRect.position);
-                    return false;
-                }
+                eScript2.transform.position = eScript2.sPos;
+                transform.position = sPos;
             }
-           
+            */
         }
-
-        return canMove;
     }
-
-   
-
-    public bool isAlive()
-    {  
+    public void isAlive()
+    {
         foreach (GameObject obs in enemies)
         {
             Rect obsRect = new Rect(new Vector2(obs.transform.position.x - (obs.transform.localScale.x / 2), obs.transform.position.y - (obs.transform.localScale.y / 2)), new Vector2(obs.transform.localScale.x, obs.transform.localScale.y));
             Rect playerRect = new Rect(new Vector2(transform.position.x - (transform.localScale.x / 2), transform.position.y - (transform.localScale.y / 2)), new Vector2(transform.localScale.x, transform.localScale.y));
-            if (obsRect.Overlaps(playerRect))
-            {          
-                return false;
+            if (obsRect.Overlaps(playerRect) && (TrackerMovement)obs.GetComponent("TrackerMovement"))
+            {
+                TrackerMovement eScript = (TrackerMovement)obs.GetComponent("TrackerMovement");
+                if (eScript.active)
+                {
+                    restart();
+                }
+
+
+            }
+            if (obsRect.Overlaps(playerRect) && (SeekerMovement)obs.GetComponent("SeekerMovement"))
+            {
+                SeekerMovement eScript = (SeekerMovement)obs.GetComponent("SeekerMovement");
+                if (eScript.active)
+                {
+                    restart();
+                }
+
+            }
+
+            //Looping through the array of keys to set them as active
+            foreach (GameObject go in keys)
+            {
+                go.SetActive(true);
+            }
+
+            //Setting all doors to be active
+            foreach (GameObject go in doors)
+            {
+                go.SetActive(true);
             }
         }
+
+
+        /*
         foreach (GameObject obs in wallTraps)
         {
             Rect obsRect = new Rect(new Vector2(obs.transform.position.x - (obs.transform.localScale.x / 2), obs.transform.position.y - (obs.transform.localScale.y / 2)), new Vector2(obs.transform.localScale.x, obs.transform.localScale.y));
             Rect playerRect = new Rect(new Vector2(transform.position.x - (transform.localScale.x / 2), transform.position.y - (transform.localScale.y / 2)), new Vector2(transform.localScale.x, transform.localScale.y));
             if (obsRect.Overlaps(playerRect))
             {             
-                return false;
+            
             }
         }
         if (swapped == true)
@@ -112,85 +123,49 @@ public class Movement : MonoBehaviour
                 Rect playerRect = new Rect(new Vector2(transform.position.x - (transform.localScale.x / 2), transform.position.y - (transform.localScale.y / 2)), new Vector2(transform.localScale.x, transform.localScale.y));
                 if (obsRect.Overlaps(playerRect))
                 {                  
-                    return false;
+                   
                 }
             }
         }
-        
-        return true;
+        */
+
     }
 
 
     public void getInput()
     {
-        if(Input.GetAxis("Horizontal") != 0)
-        {
-            
-        }
-
-        if (Input.GetKeyDown(KeyCode.E) && cMoved == false)
-        {
-           
-            mCamera.transform.position = new Vector3(mCamera.transform.position.x + 50, mCamera.transform.position.y, mCamera.transform.position.z);
-            transform.position = new Vector3(transform.position.x + 50, transform.position.y, transform.position.z);
-            cMoved = true;
-            swapped = true;
-       
-        }
-        else if (Input.GetKeyDown(KeyCode.E) && cMoved == true)
-        {
-      
-            mCamera.transform.position = new Vector3(mCamera.transform.position.x - 50, mCamera.transform.position.y, mCamera.transform.position.z);
-            transform.transform.position = new Vector3(transform.position.x - 50, transform.position.y, transform.position.z);
-            cMoved = false;
-            swapped = true;
-         
-        }
 
 
-       
-        if (Input.GetKeyDown(KeyCode.D) && canMove(new Vector3(transform.position.x + 1, transform.position.y, transform.position.z)))
+        //Checking inputs
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
-            transform.position = new Vector3(transform.position.x + 1, transform.position.y, transform.position.z);
-            swapped = false;
-        }
-        if (Input.GetKeyDown(KeyCode.A) && canMove(new Vector3(transform.position.x - 1, transform.position.y, transform.position.z)))
-        {
-            transform.position = new Vector3(transform.position.x - 1, transform.position.y, transform.position.z);
-            swapped = false;
-        }
-        if (Input.GetKeyDown(KeyCode.W) && canMove(new Vector3(transform.position.x, transform.position.y +1, transform.position.z)))
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y +1, transform.position.z);
-            swapped = false;
-        }
-        if (Input.GetKeyDown(KeyCode.S) && canMove(new Vector3(transform.position.x, transform.position.y -1, transform.position.z)))
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y -1, transform.position.z);
-            swapped = false;
-        }
-
-
-        if(canMove(transform.position) == false || isAlive() == false)
-        {
-            transform.position = sPos;
-            mCamera.transform.position = cPos;
-            cMoved = false;
-            foreach (GameObject obs in enemies)
+            //If there is nothing in front of the object
+            if (Physics2D.Raycast(transform.position, transform.up, transform.up.magnitude).collider == null)
             {
-                TrackerMovement enemyScript = (TrackerMovement)obs.GetComponent("TrackerMovement");
-                obs.transform.position = enemyScript.sPos;
+                transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
             }
-            foreach (GameObject obs in wallTraps)
-            {
-                WallTrap wallScript = (WallTrap)obs.GetComponent("WallTrap");
-                obs.transform.position = wallScript.sPos;
-                wallScript.wallTraper.transform.position = wallScript.sTrapperPos;
-            }
-
-
         }
-
+        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (Physics2D.Raycast(transform.position, -transform.up, transform.up.magnitude).collider == null)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            if (Physics2D.Raycast(transform.position, -transform.right, transform.right.magnitude).collider == null)
+            {
+                transform.position = new Vector3(transform.position.x - 1, transform.position.y, transform.position.z);
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            if (Physics2D.Raycast(transform.position, transform.right, transform.right.magnitude).collider == null)
+            {
+                transform.position = new Vector3(transform.position.x + 1, transform.position.y, transform.position.z);
+            }
+        }
 
     }
 }

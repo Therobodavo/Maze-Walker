@@ -8,59 +8,79 @@ public class TrackerMovement : MonoBehaviour {
     //Variables
     GameObject[] obstacles;
 
-    //start position tracker
-  public  Vector3 sPos;
+    GameObject player;
 
+    //start position tracker
+    public Vector3 sPos;
+
+    public bool currentWorld;
     // last position moved (used to prevent backtracking)
     string laPos;
 
     //timer for movement
-       float timer;
+    float timer;
 
     // total time
-   public float totalTime;
+    public float totalTime;
 
+    WorldSwitch WorldSwitch;
 
+    public bool active;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         sPos = transform.position;
         laPos = "Left";
         timer = 0;
         obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+        player = GameObject.FindGameObjectWithTag("Player");
+        WorldSwitch = (WorldSwitch)GameObject.FindGameObjectWithTag("WorldSwitch").GetComponent("WorldSwitch");
+
     }
-	
-	// Update is called once per frame
-	void Update () {
-        timer += 1;
-        if (timer > totalTime)
-        {
-            moveTrack();
 
-        }
-           
-        
-	}
-
-    public bool canMove(Vector3 newPos)
+    // Update is called once per frame
+    void Update()
     {
-        bool canMove = true;
-        foreach (GameObject obs in obstacles)
+       SpriteRenderer rend = (SpriteRenderer)GetComponent("SpriteRenderer");
+
+
+        if (active)
         {
-            Rect obsRect = new Rect(new Vector2(obs.transform.position.x - (obs.transform.localScale.x / 2), obs.transform.position.y - (obs.transform.localScale.y / 2)), new Vector2(obs.transform.localScale.x, obs.transform.localScale.y));
-            Rect playerRect = new Rect(new Vector2(newPos.x - (transform.localScale.x / 2), newPos.y - (transform.localScale.y / 2)), new Vector2(transform.localScale.x, transform.localScale.y));
-            if (obsRect.Overlaps(playerRect))
+            timer += 1;
+            if (timer > totalTime)
             {
-                Debug.Log(obsRect.position);
-                return false;
+                moveTrack();
+
             }
         }
-        return canMove;
+
+
+        if ((WorldSwitch.overAct && currentWorld) || (WorldSwitch.underAct && !currentWorld))
+        {
+            active = true;
+        }
+        if ((!WorldSwitch.overAct && currentWorld) || (!WorldSwitch.underAct && !currentWorld))
+        {
+            active = false;
+        }
+
+
+        if (!active)
+        {
+            rend.enabled = false;
+        }
+        else
+        {
+            rend.enabled = true;
+        }
     }
+
+
 
     public bool moveLeft()
     {
-        if (canMove(new Vector3(transform.position.x - 1, transform.position.y, transform.position.z)))
+        if (Physics2D.Raycast(transform.position, -transform.right, transform.right.magnitude).collider == null)
         {
             transform.position = new Vector3(transform.position.x - 1, transform.position.y, transform.position.z);
             laPos = "Left";
@@ -70,17 +90,17 @@ public class TrackerMovement : MonoBehaviour {
     }
     public bool moveRight()
     {
-        if (canMove(new Vector3(transform.position.x + 1, transform.position.y, transform.position.z)))
+        if (Physics2D.Raycast(transform.position, transform.right, transform.right.magnitude).collider == null)
         {
             transform.position = new Vector3(transform.position.x + 1, transform.position.y, transform.position.z);
             laPos = "Right";
-            return true;       
+            return true;
         }
         return false;
     }
     public bool moveUp()
     {
-        if (canMove(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z)))
+        if (Physics2D.Raycast(transform.position, transform.up, transform.up.magnitude).collider == null)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
             laPos = "Up";
@@ -90,7 +110,7 @@ public class TrackerMovement : MonoBehaviour {
     }
     public bool moveDown()
     {
-        if (canMove(new Vector3(transform.position.x, transform.position.y - 1, transform.position.z)))
+        if (Physics2D.Raycast(transform.position, -transform.up, transform.up.magnitude).collider == null)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
             laPos = "Down";
@@ -114,7 +134,7 @@ public class TrackerMovement : MonoBehaviour {
                 timer = 0;
 
         }
-        else if(laPos == "Left")
+        else if (laPos == "Left")
         {
             if (moveLeft())
                 timer = 0;
@@ -151,5 +171,8 @@ public class TrackerMovement : MonoBehaviour {
 
         }
     }
+
+
+
 
 }

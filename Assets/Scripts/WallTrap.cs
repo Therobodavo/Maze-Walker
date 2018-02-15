@@ -32,25 +32,7 @@ public class WallTrap : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         timer++;
-        followPlayer();
+
 	}
 
-    public void followPlayer()
-    {
-        if(mScript.cMoved == true)
-        {
-            if(player.transform.position.y < transform.position.y && timer > timerTotal)
-            {
-                transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
-                wallTraper.transform.position =  new Vector3(wallTraper.transform.position.x - 1, wallTraper.transform.position.y, wallTraper.transform.position.z);
-                timer = 0;
-            }
-            else if(player.transform.position.y > transform.position.y && timer > timerTotal)
-            {
-                transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-                wallTraper.transform.position = new Vector3(wallTraper.transform.position.x + 1, wallTraper.transform.position.y, wallTraper.transform.position.z);
-                timer = 0;
-            }
-        }
-    }
 }
