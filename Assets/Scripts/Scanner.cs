@@ -34,7 +34,7 @@ public class Scanner : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.GetKeyDown(KeyCode.L) && Time.time - timeLastEnded > (secDelay + 1) && numScans > 0)
+        if (Input.GetKeyDown(KeyCode.Q) && Time.time - timeLastEnded > (secDelay + 1) && numScans > 0)
         {
             scanning = true;
         }
