@@ -768,17 +768,17 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Move Player with WASD or Arrow Keys
+  m_Text: 'Move the player with WASD or Arrow Keys
 
-    Collect Keys to Open Doors
+    Collect keys to open doors
 
-    Switch Worlds by Pressing E
+    Switch worlds by pressing E
 
-    Scan The World You are not in by pressing Q
+    Scan the world you are not in by pressing Q
 
-    Dodge Enemies that will force you to restart
+    Dodge enemies that will force you to restart
 
-    Reach the end cube to progress to the next level'
+    Reach the end cube to go to the next level'
 --- !u!222 &1267617214
 CanvasRenderer:
   m_ObjectHideFlags: 0
