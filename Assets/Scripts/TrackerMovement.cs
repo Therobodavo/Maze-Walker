@@ -23,7 +23,7 @@ public class TrackerMovement : MonoBehaviour {
     // total time
     public float totalTime;
 
-    WorldSwitch WorldSwitch;
+    public WorldSwitch WorldSwitch;
 
     public bool active;
 
