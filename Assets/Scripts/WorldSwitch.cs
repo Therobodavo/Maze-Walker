@@ -17,7 +17,7 @@ public class WorldSwitch : MonoBehaviour
     public Tilemap overMap;
     public Tilemap underMap;
 
-    private GameObject player;
+    private GameObject[] player;
     private Vector3Int playerInt;
 
     private Vector3 initPlayerPos;
@@ -35,8 +35,15 @@ public class WorldSwitch : MonoBehaviour
         keys = GameObject.FindGameObjectsWithTag("Key");
         doors = GameObject.FindGameObjectsWithTag("Door");
 
-        player = GameObject.Find("Player");
-        initPlayerPos = player.transform.position;
+        player = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject play in player)
+        {
+            if (play != player[0])
+                Destroy(play);
+        }
+
+
+        initPlayerPos = player[0].transform.position;
     }
 
     // Update is called once per frame
@@ -72,10 +79,10 @@ public class WorldSwitch : MonoBehaviour
 
 
             //If the player switches into a world and into a tile
-            if (Physics2D.Raycast(player.transform.position, player.transform.up, .1f).collider == true)
+            if (Physics2D.Raycast(player[0].transform.position, player[0].transform.up, .1f).collider == true)
             {
                 //Restart the player at their spawn position
-                player.transform.position = initPlayerPos;
+                player[0].transform.position = initPlayerPos;
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
                 //Looping through the array of keys to set them as active
@@ -89,7 +96,7 @@ public class WorldSwitch : MonoBehaviour
                 {
                     go.SetActive(true);
                 }
-                Movement pScript = (Movement)player.GetComponent("Movement");
+                Movement pScript = (Movement)player[0].GetComponent("Movement");
                 pScript.restart();
 
                 overWorld.transform.position = new Vector3(overWorld.transform.position.x, overWorld.transform.position.y, 0);

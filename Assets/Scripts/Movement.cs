@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour
 {
-   //Variables
+
+    //Variables
     GameObject[] obstacles;
-  public GameObject[] enemies;
+    public GameObject[] enemies;
     GameObject[] flipTraps;
     GameObject[] wallTraps;
     public GameObject[] keys;
@@ -26,14 +28,8 @@ public class Movement : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        keys = GameObject.FindGameObjectsWithTag("Key");
-        doors = GameObject.FindGameObjectsWithTag("Door");
+
         sPos = transform.position;
-        obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        flipTraps = GameObject.FindGameObjectsWithTag("FlipTrap");
-        wallTraps = GameObject.FindGameObjectsWithTag("WallTrap");
- 
 
         swapped = false;
 
@@ -42,50 +38,32 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        keys = GameObject.FindGameObjectsWithTag("Key");
+        doors = GameObject.FindGameObjectsWithTag("Door");
+
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
         isAlive();
         DontDestroyOnLoad(this);
         getInput();
     }
     public void restart()
     {
-        foreach (GameObject ob in enemies)
-        {
-            TrackerMovement eScript = (TrackerMovement)ob.GetComponent("TrackerMovement");
-            if (eScript.active)
-            {
-                eScript.transform.position = eScript.sPos;
-                transform.position = sPos;
-            }
-            /*SeekerMovement eScript2 = (SeekerMovement)ob.GetComponent("SeekerMovement");
-            if (eScript2.active)
-            {
-                eScript2.transform.position = eScript2.sPos;
-                transform.position = sPos;
-            }
-            */
-        }
+        Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
     }
     public void isAlive()
     {
         foreach (GameObject obs in enemies)
         {
+
             Rect obsRect = new Rect(new Vector2(obs.transform.position.x - (obs.transform.localScale.x / 2), obs.transform.position.y - (obs.transform.localScale.y / 2)), new Vector2(obs.transform.localScale.x, obs.transform.localScale.y));
             Rect playerRect = new Rect(new Vector2(transform.position.x - (transform.localScale.x / 2), transform.position.y - (transform.localScale.y / 2)), new Vector2(transform.localScale.x, transform.localScale.y));
-            if (obsRect.Overlaps(playerRect) && (TrackerMovement)obs.GetComponent("TrackerMovement"))
+            if (obsRect.Overlaps(playerRect))
             {
                 TrackerMovement eScript = (TrackerMovement)obs.GetComponent("TrackerMovement");
                 if (eScript.active)
                 {
-                    restart();
-                }
-
-
-            }
-            if (obsRect.Overlaps(playerRect) && (SeekerMovement)obs.GetComponent("SeekerMovement"))
-            {
-                SeekerMovement eScript = (SeekerMovement)obs.GetComponent("SeekerMovement");
-                if (eScript.active)
-                {
+                    transform.position = sPos;
                     restart();
                 }
 
@@ -102,6 +80,8 @@ public class Movement : MonoBehaviour
             {
                 go.SetActive(true);
             }
+
+
         }
 
 
