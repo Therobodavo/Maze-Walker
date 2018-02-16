@@ -1755,6 +1755,7 @@ Prefab:
   m_ParentPrefab: {fileID: 100100000, guid: 85450272098e158468bdef4c61b7eb2f, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &893191805
+<<<<<<< HEAD
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1797,6 +1798,8 @@ Prefab:
   m_ParentPrefab: {fileID: 100100000, guid: 8abd46cc997e3dd4f921dedf7be1c583, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &950985827
+=======
+>>>>>>> c282ccfeb50e1ab01202ac4bc78a177e122810b9
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
