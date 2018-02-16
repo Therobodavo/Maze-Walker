@@ -59,10 +59,12 @@ public class TrackerMovement : MonoBehaviour {
         if ((WorldSwitch.overAct && currentWorld) || (WorldSwitch.underAct && !currentWorld))
         {
             active = true;
+            gameObject.layer = 0;
         }
         if ((!WorldSwitch.overAct && currentWorld) || (!WorldSwitch.underAct && !currentWorld))
         {
             active = false;
+            gameObject.layer = 8;
         }
 
 
