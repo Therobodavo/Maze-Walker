@@ -453,6 +453,22 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4253854314272736, guid: 8abd46cc997e3dd4f921dedf7be1c583, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 4253854314272736, guid: 8abd46cc997e3dd4f921dedf7be1c583, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 19.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 4356010927668422, guid: 8abd46cc997e3dd4f921dedf7be1c583, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 4356010927668422, guid: 8abd46cc997e3dd4f921dedf7be1c583, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -4.22
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8abd46cc997e3dd4f921dedf7be1c583, type: 2}
   m_IsPrefabParent: 0
@@ -2443,7 +2459,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Press E to switch worlds
+  m_Text: 'Press E to switch worlds
+
+    Press Q to scan the other world'
 --- !u!222 &1851885423
 CanvasRenderer:
   m_ObjectHideFlags: 0
