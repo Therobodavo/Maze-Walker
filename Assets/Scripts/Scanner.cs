@@ -12,8 +12,9 @@ public class Scanner : MonoBehaviour {
 
     public List<GameObject> blocks;
     public GameObject whiteBlock;
+    List<Collider> scanned;
 
-    public float secDelay = 2;
+    public float secDelay = 1;
     float timeLastEnded = -5;
     public float speed = 0;
     public int numScans = 3;
@@ -22,6 +23,7 @@ public class Scanner : MonoBehaviour {
 	void Start ()
     {
         blocks = new List<GameObject>();
+        scanned = new List<Collider>();
         whiteBlock.transform.position = new Vector3(-100,-100,-100);
 
         startPos = transform.GetChild(0).position;
@@ -40,11 +42,13 @@ public class Scanner : MonoBehaviour {
 	}
      void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.GetInstanceID());
-        whiteBlock.transform.position = other.transform.position;
-        whiteBlock.transform.position = new Vector3(whiteBlock.transform.position.x, whiteBlock.transform.position.y, -.3f);
-        whiteBlock.transform.localScale = other.transform.localScale;
-        blocks.Add(Instantiate(whiteBlock));
+        if(scanned.IndexOf(other) == -1) 
+        {
+            scanned.Add(other);
+            whiteBlock.transform.position = other.transform.position;
+            whiteBlock.transform.position = new Vector3(whiteBlock.transform.position.x, whiteBlock.transform.position.y, -.3f);
+            blocks.Add(Instantiate(whiteBlock));
+        }
     }
     void Scan()
     {
@@ -54,6 +58,7 @@ public class Scanner : MonoBehaviour {
             {
                 //Set start position of scanner
                 transform.position = startPos;
+                scanned.Clear();
                 GetComponent<Rigidbody>().AddForce(Vector3.right * speed, ForceMode.VelocityChange);
                 scanStarted = true;
                 numScans--;
