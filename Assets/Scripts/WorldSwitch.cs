@@ -44,8 +44,11 @@ public class WorldSwitch : MonoBehaviour
     {
         //Debug.Log(overMap.GetTile(playerInt));
         //Getting input to change the worlds
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && !(GameObject.Find("Scanner").GetComponent<Scanner>().scanning))
         {
+            //Clear any scanned objects
+            GameObject.Find("Scanner").GetComponent<Scanner>().destroyBlocks();
+
             //Changing which is enabled
             overAct = !overAct;
             underAct = !underAct;

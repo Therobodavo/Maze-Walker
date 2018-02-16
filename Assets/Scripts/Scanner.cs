@@ -8,14 +8,15 @@ public class Scanner : MonoBehaviour {
     Vector3 endPos;
 
     bool scanStarted = false;
-    bool scanning = false;
+    public bool scanning = false;
 
-    List<GameObject> blocks;
+    public List<GameObject> blocks;
     public GameObject whiteBlock;
 
     public float secDelay = 2;
     float timeLastEnded = -5;
     public float speed = 0;
+    public int numScans = 3;
 
 	// Use this for initialization
 	void Start ()
@@ -31,7 +32,7 @@ public class Scanner : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.GetKeyDown(KeyCode.L) && Time.time - timeLastEnded > (secDelay + 1))
+        if (Input.GetKeyDown(KeyCode.L) && Time.time - timeLastEnded > (secDelay + 1) && numScans > 0)
         {
             scanning = true;
         }
@@ -39,8 +40,9 @@ public class Scanner : MonoBehaviour {
 	}
      void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.GetInstanceID());
         whiteBlock.transform.position = other.transform.position;
-        whiteBlock.transform.position += new Vector3(0, 0, -1);
+        whiteBlock.transform.position = new Vector3(whiteBlock.transform.position.x, whiteBlock.transform.position.y, -.3f);
         whiteBlock.transform.localScale = other.transform.localScale;
         blocks.Add(Instantiate(whiteBlock));
     }
@@ -54,6 +56,7 @@ public class Scanner : MonoBehaviour {
                 transform.position = startPos;
                 GetComponent<Rigidbody>().AddForce(Vector3.right * speed, ForceMode.VelocityChange);
                 scanStarted = true;
+                numScans--;
             }
 
             //check if behind
@@ -67,10 +70,14 @@ public class Scanner : MonoBehaviour {
         }
         if (Time.time - timeLastEnded >= secDelay && !scanning)
         {
-            foreach (GameObject b in blocks)
-            {
-                Destroy(b);
-            }
+            destroyBlocks();
         }
+    }
+    public void destroyBlocks() 
+    {
+        foreach (GameObject b in blocks)
+        {
+            Destroy(b);
+        } 
     }
 }
