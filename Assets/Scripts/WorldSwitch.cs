@@ -51,7 +51,6 @@ public class WorldSwitch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(overMap.GetTile(playerInt));
         //Getting input to change the worlds
         if (Input.GetKeyDown(KeyCode.E) && !(GameObject.Find("Scanner").GetComponent<Scanner>().scanning))
         {
@@ -77,7 +76,6 @@ public class WorldSwitch : MonoBehaviour
                 underWorld.transform.position = new Vector3(underWorld.transform.position.x, underWorld.transform.position.y, 0);
                 underMap.GetComponent<TilemapCollider2D>().enabled = true;
             }
-            //underWorld.SetActive(underAct);
 
 
             //If the player switches into a world and into a tile

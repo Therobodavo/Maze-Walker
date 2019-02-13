@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class KeyScript : MonoBehaviour {
 
-    // Use this for initialization
+    //References
     GameObject player;
     BoxCollider playerBox;
-    public bool Active;
     public MeshRenderer[] keyParts;
+
+    //Variables
+    public bool Active;
+
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
         playerBox = (BoxCollider)player.GetComponent("BoxCollider");

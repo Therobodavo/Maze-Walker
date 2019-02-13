@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class Scanner : MonoBehaviour {
 
+    //Start and End Points
     Vector3 startPos;
     Vector3 endPos;
 
+    //Variables Used
     bool scanStarted = false;
     public bool scanning = false;
-
-    public List<GameObject> blocks;
-    public GameObject whiteBlock;
-    List<Collider> scanned;
-
     public float secDelay = 1;
     float timeLastEnded = -5;
     public float speed = 0;
     public int numScans = 3;
+
+    //References
+    public List<GameObject> blocks;
+    public GameObject whiteBlock;
+    List<Collider> scanned;
 
 	// Use this for initialization
 	void Start ()
@@ -34,12 +36,15 @@ public class Scanner : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        //If Can Scan
         if (Input.GetKeyDown(KeyCode.Q) && Time.time - timeLastEnded > (secDelay + 1) && numScans > 0)
         {
             scanning = true;
         }
         Scan();
 	}
+
+    //Gets objects in othe world when hit
      void OnTriggerEnter(Collider other)
     {
         if(scanned.IndexOf(other) == -1) 
@@ -50,6 +55,8 @@ public class Scanner : MonoBehaviour {
             blocks.Add(Instantiate(whiteBlock));
         }
     }
+
+    //Main Scan
     void Scan()
     {
         if(scanning)
@@ -78,6 +85,8 @@ public class Scanner : MonoBehaviour {
             destroyBlocks();
         }
     }
+
+    //Reset Blocks
     public void destroyBlocks() 
     {
         foreach (GameObject b in blocks)
